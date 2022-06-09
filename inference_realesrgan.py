@@ -94,7 +94,7 @@ def main():
 
     for idx, path in enumerate(paths):
         imgname, extension = os.path.splitext(os.path.basename(path))
-        print('Testing', idx, imgname)
+#         print('Testing', idx, imgname)
 
         img = cv2.imread(path, cv2.IMREAD_UNCHANGED)
         if len(img.shape) == 3 and img.shape[2] == 4:
@@ -122,6 +122,7 @@ def main():
             else:
                 save_path = os.path.join(args.output, f'{imgname}_{args.suffix}.{extension}')
             cv2.imwrite(save_path, output)
+            print(f'{imgname}_{args.suffix}.{extension}')
 
 
 if __name__ == '__main__':
