@@ -2,6 +2,7 @@ from cog import BasePredictor, Input, Path
 import torch
 import inference_realesrgan
 import os
+import re
 
 class Predictor(BasePredictor):
     def setup(self):
@@ -12,8 +13,10 @@ class Predictor(BasePredictor):
     def predict(self,
           image: Path = Input(description="Grayscale input image")
     ) -> Path:
-        response = os.popen(f"python ./inference_realesrgan.py -i {image} -o ./ --suffix out").read().strip()
+        response = os.popen(f"python ./inference_realesrgan.py -i {image} -o ./ --suffix out --face_enhance").read().strip()
         response = os.path.join('./',response)
-        print(f'Response - {response}')
-        return Path(response)
-#         inference_realesrgan.main()
+        response_search = re.search('RESPONSE(.*)RESPONSE', response, re.IGNORECASE)
+        if response_search:
+            response = response_search.group(1)
+            print(f'Response - {response}')
+            return Path(response)
