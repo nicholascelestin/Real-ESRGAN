@@ -11,9 +11,14 @@ class Predictor(BasePredictor):
 
     # The arguments and types the model takes as input
     def predict(self,
-          image: Path = Input(description="Grayscale input image")
+          image: Path = Input(description="Original input image"),
+          face_enhance: bool = Input(description="Whether or not to enable face enhancement", default=True)
     ) -> Path:
-        response = os.popen(f"python ./inference_realesrgan.py -i {image} -o ./ --suffix out --face_enhance").read().strip()
+        if(face_enhance):
+            face_enhance_string = "--face_enhance"
+        else:
+            face_enhance_string = ""
+        response = os.popen(f"python ./inference_realesrgan.py -i {image} -o ./ --suffix out --face_enhance {face_enhance_string}").read().strip()
         response = os.path.join('./',response)
         response_search = re.search('RESPONSE(.*)RESPONSE', response, re.IGNORECASE)
         if response_search:
