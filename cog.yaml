@@ -20,4 +20,4 @@ build:
     - "mkdir src/experiments/pretrained_models"
     - "wget https://github.com/xinntao/Real-ESRGAN/releases/download/v0.1.0/RealESRGAN_x4plus.pth -P src/experiments/pretrained_models"
 predict: "predict.py:Predictor"
-image: "us-east1-docker.pkg.dev/emerald-entity-352302/esrgan/esrgan-image"
+image: "r8.im/nicholascelestin/real-esrgan-nitroviper"
