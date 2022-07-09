@@ -14,7 +14,8 @@ class Predictor(BasePredictor):
     def predict(self,
                 image: Path = Input(description="Original input image"),
                 face_enhance: bool = Input(description="Whether or not to enable face enhancement", default=False),
-                model: str = Input(description="Which model to use", default="RealESRGAN_x4plus", choices=["RealESRGAN_x4plus","RealESRGAN_x4plus_anime_6B"])
+                model: str = Input(description="Which model to use", default="RealESRGAN_x4plus", choices=["RealESRGAN_x4plus","RealESRGAN_x4plus_anime_6B"]),
+                scale: int = Input(description="How much to upscale by?", default=4)
                 ) -> Path:
         if (face_enhance):
             print("Enhancing faces")
@@ -23,9 +24,11 @@ class Predictor(BasePredictor):
             face_enhance_string = ""
             print("Not enhancing faces")
 
-        print(f"python ./inference_realesrgan.py -n {model} -i {image} -o ./ --suffix out {face_enhance_string}")
+        scaling_string = f'-s {scale}'
+
+        print(f"python ./inference_realesrgan.py -n {model} -i {image} -o ./ --suffix out {face_enhance_string} {scaling_string}")
         response = os.popen(
-            f"python ./inference_realesrgan.py -n {model} -i {image} -o ./ --suffix out {face_enhance_string}").read().strip()
+            f"python ./inference_realesrgan.py -n {model} -i {image} -o ./ --suffix out {face_enhance_string} {scaling_string}").read().strip()
         response = os.path.join('./', response)
         response_search = re.search('RESPONSE(.*)RESPONSE', response, re.IGNORECASE)
         if response_search:
