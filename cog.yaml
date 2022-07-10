@@ -21,4 +21,4 @@ build:
     - "wget https://github.com/xinntao/Real-ESRGAN/releases/download/v0.1.0/RealESRGAN_x4plus.pth -P src/experiments/pretrained_models"
     - "wget https://github.com/xinntao/Real-ESRGAN/releases/download/v0.2.2.4/RealESRGAN_x4plus_anime_6B.pth -P src/experiments/pretrained_models"
 predict: "predict.py:Predictor"
-image: "r8.im/nicholascelestin/dalle-mega"
+image: "r8.im/nicholascelestin/real-esrgan-nitroviper"
